@@ -63,9 +63,9 @@ $(document).ready(function () {
 })
 ```
 
-These snippets of code form the foundation of your application, yet they don't just yet. That's for step 2 :)
+These snippets of code form the foundation of your application, yet they don't just yet. That's for step 2!
 
-## Part 2: Let's make something!
+## Step 2: Let's make something!
 
 Now that we have the base of our app, lets make something simple... a tap race game!
 
@@ -73,8 +73,8 @@ Add the following snippets in the respective files:
 
 HTML: Add two buttons to the page with classes so that they are distinguishable in code.
 ```html
-<div class="tap red">Tap Me!</div>
-<div class="tap blue">Tap Me!</div>
+<div class="tap red">Tap to play</div>
+<div class="tap blue">Tap to play</div>
 ```
 CSS: Defines how the two buttons should look, gives them respective colors, and flips one of them.
 ```css
@@ -103,17 +103,42 @@ var scores = {
   red: 0,
   blue: 0
 }
+var won = false
+var $taps = $('.tap')
 
-$('.tap').on('touchstart mousedown', function (e) {
-  // The element that was clicked:
-  var $this = $(this)
-  // Grabs the second item of the class attribute, which is red or blue respectively.
-  var type = $this.attr('class').split(' ')[1]
-  // Increments the score
-  scores[type] += 1
-  // Change the text.
-  $this.text('Your score is ' + scores[type])
+// When someone taps an element with the class "tap", run the function.
+$taps.on('touchstart mousedown', function (e) {
+  if (!won) {
+    // The element that was clicked:
+    var $this = $(this)
+    // Grabs the second item of the class attribute, which is red or blue respectively.
+    var type = $this.attr('class').split(' ')[1]
+    // Increments the score
+    scores[type] += 1
+    // Change the text.
+    $this.text('Your score is ' + scores[type])
+    // Add condition for finishing the game.
+    if (scores[type] >= 10) {
+      won = true
+      // Reward the winner.
+      $taps.text(type + ' won the game!')
+      setTimeout(function () {
+        // Reset scores
+        scores = {
+          red: 0,
+          blue: 0
+        }
+        // Add it back.
+        $taps.text('Tap to play')
+        won = false
+      }, 3000)
+    }
+  }
   // Stop it from doing generic actions like selecting text.
   return false
 })
 ```
+
+Now you can run your app depending on your editor (IE: Double click the index.html if you did this locally, or Codepen will auto-reload when you're done typing) and play against a friend!
+
+More steps to come. If you have any questions or suggestions, file an [issue](https://github.com/Egoscio/webapps/issues/new)!
