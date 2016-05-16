@@ -118,7 +118,7 @@ $taps.on('touchstart mousedown', function (e) {
     // Change the text.
     $this.text('Your score is ' + scores[type])
     // Add condition for finishing the game.
-    if (scores[type] >= 10) {
+    if (scores[type] >== 100) {
       won = true
       // Reward the winner.
       $taps.text(type + ' won the game!')
