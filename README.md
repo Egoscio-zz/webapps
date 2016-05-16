@@ -63,7 +63,7 @@ $(document).ready(function () {
 })
 ```
 
-These snippets of code form the foundation of your application, yet they don't just yet. That's for step 2!
+These snippets of code form the foundation of your application, yet they don't do much just yet. That's for step 2!
 
 ## Step 2: Let's make something!
 
