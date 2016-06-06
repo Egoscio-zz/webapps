@@ -2,7 +2,7 @@
 
 ## Introduction:
 
-After the recent advancements in HTML5, CSS3 and ECMAScript 6 (Javascript), as well as a handful of powerful libraries and frameworks such as jQuery, AngularJS, and RiotJS, Developers began working on implementing said technologies in the domain of mobile applications. By following this philosophy, one is able to write his or her code once and deploy it on multiple platforms with the click of a button. This tutorial will show you how to make web apps using your existing knowledge of making websites.
+After the recent advancements in HTML5, CSS3 and ECMAScript 6 (Javascript), as well as a handful of powerful libraries and frameworks such as jQuery, AngularJS, React, Ember, Backbone, and RiotJS, Developers began working on implementing said technologies in the domain of mobile applications. By following this philosophy, one is able to write his or her code once and deploy it on multiple platforms with the click of a button. This tutorial will show you how to make web apps using your existing knowledge of making websites.
 
 ## Step 1: The Basics
 
@@ -71,7 +71,8 @@ Now that we have the base of our app, lets make something simple... a tap race g
 
 Add the following snippets in the respective files:
 
-HTML: Add two buttons to the page with classes so that they are distinguishable in code.
+HTML: Add two boxes to the page that serve as buttons with classes so that they are distinguishable in code.
+NOTE: The div's themselves won't do anything until we add Javascript.
 ```html
 <div class="tap red">Tap to play</div>
 <div class="tap blue">Tap to play</div>
@@ -104,6 +105,7 @@ var scores = {
   blue: 0
 }
 var won = false
+// Caching document selector in a variable (good method for optimizing performance when lots of elements are queried).
 var $taps = $('.tap')
 
 // When someone taps an element with the class "tap", run the function.
@@ -113,12 +115,13 @@ $taps.on('touchstart mousedown', function (e) {
     var $this = $(this)
     // Grabs the second item of the class attribute, which is red or blue respectively.
     var type = $this.attr('class').split(' ')[1]
-    // Increments the score
+    // Increments the score.
     scores[type] += 1
     // Change the text.
     $this.text('Your score is ' + scores[type])
     // Add condition for finishing the game.
     if (scores[type] >= 100) {
+      // Change the game state.
       won = true
       // Reward the winner.
       $taps.text(type + ' won the game!')
@@ -128,13 +131,14 @@ $taps.on('touchstart mousedown', function (e) {
           red: 0,
           blue: 0
         }
-        // Add it back.
+        // Add back play message.
         $taps.text('Tap to play')
+        // Reset game state so it's playable again.
         won = false
-      }, 3000)
+      }, 3000) // setTimeout uses milliseconds, so 3 * 1000 = 3 seconds.
     }
   }
-  // Stop it from doing generic actions like selecting text.
+  // Stop it from doing generic actions like selecting text (Part of the jQuery API).
   return false
 })
 ```
